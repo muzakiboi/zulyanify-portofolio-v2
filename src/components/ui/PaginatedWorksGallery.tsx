@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Link from "next/link";
 import { projects } from "@/data/projects";
 
 // Varian animasi untuk transisi halaman
-const variants = {
+const variants: Variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 1500 : -1500, // Masuk dari kanan atau kiri
     opacity: 0,
@@ -17,14 +17,14 @@ const variants = {
     opacity: 1,
     scale: 1,
     rotateY: 0,
-    transition: { type: "spring", stiffness: 80, damping: 20, mass: 1 }
+    transition: { type: "spring" as const, stiffness: 80, damping: 20, mass: 1 }
   },
   exit: (direction: number) => ({
     x: direction > 0 ? -1500 : 1500, // Keluar ke kiri atau kanan
     opacity: 0,
     scale: 0.8,
     rotateY: direction > 0 ? -45 : 45,
-    transition: { type: "spring", stiffness: 80, damping: 20, mass: 1 }
+    transition: { type: "spring" as const, stiffness: 80, damping: 20, mass: 1 }
   })
 };
 
