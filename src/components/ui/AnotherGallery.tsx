@@ -407,7 +407,7 @@ export default function AnotherGallery() {
             </div>
 
             {/* Gallery Media Grid (Scrollable Container) */}
-            <div className="flex-1 overflow-y-auto px-6 md:px-12 py-10">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-6 md:px-12 py-10">
               <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                   {activeCategory.items.map((item, i) => {
