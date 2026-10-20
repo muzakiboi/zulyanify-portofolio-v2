@@ -289,23 +289,23 @@ export default function AnotherGallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-[#050505]/95 backdrop-blur-2xl flex flex-col overflow-hidden"
+            className="fixed inset-0 z-[150] bg-[#050505] flex flex-col overflow-hidden"
           >
-            {/* Top Bar Navigation */}
-            <div className="shrink-0 w-full px-6 md:px-12 py-6 border-b border-white/10 flex items-center justify-between bg-black/40">
+            {/* Top Bar Navigation (Cleanly above global header) */}
+            <div className="shrink-0 w-full px-6 md:px-12 py-5 border-b border-white/10 flex items-center justify-between bg-[#080808] z-10 shadow-2xl">
               <div className="flex items-center gap-4">
                 <button 
                   onClick={closeCategory}
-                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#FF3366] text-white flex items-center justify-center transition-all hover:scale-110"
+                  className="px-4 py-2 rounded-full bg-white/10 hover:bg-[#FF3366] text-white flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-all hover:scale-105"
                   aria-label="Back"
                 >
-                  <ChevronLeft size={20} />
+                  <ChevronLeft size={16} /> Back
                 </button>
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white">
+                  <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter text-white leading-none">
                     {activeCategory.title}
                   </h3>
-                  <p className="text-xs tracking-widest uppercase text-white/50">
+                  <p className="text-[10px] md:text-xs tracking-widest uppercase text-[#FF3366] font-bold mt-1">
                     {activeCategory.items.length} Archive Media Items
                   </p>
                 </div>
@@ -431,7 +431,7 @@ export default function AnotherGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-10"
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-10"
             onClick={() => setLightboxIndex(null)}
           >
             {/* Top Close & Counter */}
