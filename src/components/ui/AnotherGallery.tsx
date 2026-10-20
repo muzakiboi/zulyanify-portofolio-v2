@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Maximize2, ChevronLeft, ChevronRight, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { X, Maximize2, ChevronLeft, ChevronRight, Sparkles, Volume2, VolumeX, Play } from "lucide-react";
 
 interface GalleryItem {
   title: string;
@@ -177,6 +177,14 @@ export default function AnotherGallery() {
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [videoMuted, setVideoMuted] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Check URL hash on load
   useEffect(() => {
@@ -248,7 +256,9 @@ export default function AnotherGallery() {
       {/* Interactive Category Sliders */}
       {GALLERY_CATEGORIES.map((cat, idx) => {
         const isVideoCat = cat.id === "video-editing";
-        const marquee = [...cat.previewImages, ...cat.previewImages, ...cat.previewImages];
+        const marquee = isMobile 
+          ? [...cat.previewImages.slice(0, 4), ...cat.previewImages.slice(0, 4)]
+          : [...cat.previewImages, ...cat.previewImages];
         
         return (
           <div 
@@ -260,25 +270,36 @@ export default function AnotherGallery() {
             {isVideoCat ? (
               <div className="absolute inset-0 w-full h-full">
                 <video 
-                  src="https://cdn.coverr.co/videos/coverr-typing-on-a-macbook-pro-2586/1080p.mp4" 
-                  autoPlay loop muted playsInline
+                  src={isMobile ? undefined : "https://cdn.coverr.co/videos/coverr-typing-on-a-macbook-pro-2586/1080p.mp4"}
+                  poster="/assets/images/project-womenmoment/hero-womenmoment.png"
+                  autoPlay={!isMobile} 
+                  loop 
+                  muted 
+                  playsInline
+                  preload="none"
                   className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-100 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/50 pointer-events-none" />
               </div>
             ) : (
-              <div className={`absolute flex w-[400vw] md:w-[200vw] ${cat.direction === 1 ? 'justify-end -ml-[150vw] md:-ml-[50vw]' : ''}`}>
+              <div className={`absolute flex ${isMobile ? 'w-[250vw]' : 'w-[200vw]'} ${cat.direction === 1 ? 'justify-end -ml-[120vw] md:-ml-[50vw]' : ''}`}>
                 <motion.div 
                   className="flex gap-4 md:gap-8 px-4"
-                  animate={{ x: cat.direction === 1 ? [-2000, 0] : [0, -2000] }}
-                  transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
+                  animate={{ x: cat.direction === 1 ? [-1600, 0] : [0, -1600] }}
+                  transition={{ repeat: Infinity, duration: isMobile ? 30 : 45, ease: "linear" }}
                 >
                   {marquee.map((img, i) => (
                     <div 
                       key={i} 
                       className="w-[200px] h-[280px] md:w-[350px] md:h-[450px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:scale-105"
                     >
-                      <img src={img} className="w-full h-full object-cover opacity-50 group-hover:opacity-90 transition-opacity duration-700" alt={cat.title} />
+                      <img 
+                        src={img} 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover opacity-50 group-hover:opacity-90 transition-opacity duration-700" 
+                        alt={cat.title} 
+                      />
                     </div>
                   ))}
                 </motion.div>
@@ -287,7 +308,7 @@ export default function AnotherGallery() {
 
             {/* Interactive Foreground Button Badge */}
             <div className="absolute inset-0 flex flex-col items-center justify-center z-30 px-4 pointer-events-none">
-               <div className="bg-black/70 backdrop-blur-xl border border-white/15 px-8 py-5 md:px-20 md:py-8 rounded-full shadow-[0_30px_80px_rgba(0,0,0,0.9)] transform group-hover:scale-110 group-hover:border-[#FF3366] transition-all duration-500 flex flex-col items-center gap-2">
+               <div className="bg-black/75 backdrop-blur-md md:backdrop-blur-xl border border-white/15 px-8 py-5 md:px-20 md:py-8 rounded-full shadow-[0_30px_80px_rgba(0,0,0,0.9)] transform group-hover:scale-110 group-hover:border-[#FF3366] transition-all duration-500 flex flex-col items-center gap-2">
                   <h2 className="text-3xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none drop-shadow-2xl group-hover:text-white">
                     {cat.title}
                   </h2>
@@ -408,9 +429,15 @@ export default function AnotherGallery() {
                               muted
                               loop
                               playsInline
-                              autoPlay
-                              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                              preload="metadata"
+                              className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity"
                             />
+                            {/* Play Icon Badge */}
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                              <div className="w-12 h-12 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center group-hover:bg-[#FF3366] group-hover:border-[#FF3366] transition-all shadow-2xl group-hover:scale-110">
+                                <Play size={20} className="ml-1" />
+                              </div>
+                            </div>
                             <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold tracking-widest text-[#FF3366] uppercase border border-white/10">
                               REEL / VIDEO
                             </div>
@@ -420,6 +447,7 @@ export default function AnotherGallery() {
                             src={item.url}
                             alt={item.title}
                             loading="lazy"
+                            decoding="async"
                             className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
                           />
                         )}

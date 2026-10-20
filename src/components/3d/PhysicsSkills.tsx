@@ -113,7 +113,12 @@ export default function PhysicsSkills() {
         <p className="text-[#FF3366] mt-4 tracking-widest uppercase text-sm font-bold">Interactive Core Stack</p>
       </div>
 
-      <Canvas shadows camera={{ position: [0, 2, 12], fov: 50 }}>
+      <Canvas 
+        shadows 
+        camera={{ position: [0, 2, 12], fov: 50 }}
+        dpr={[1, 1.5]}
+        gl={{ powerPreference: "high-performance" }}
+      >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} castShadow intensity={1.5} />
         <Environment preset="city" />
