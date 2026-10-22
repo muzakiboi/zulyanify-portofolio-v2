@@ -6,6 +6,7 @@ export const projects = [
     year: "2025",
     description: "Universitas Pembangunan Jaya (UPJ) celebrated its 14th Dies Natalis and 11th Graduation Ceremony with a distinguished, culturally enriched visual identity. The design represents the comprehensive execution across print, stage architecture, and digital promos.",
     image: "/assets/images/graduation-upj-2025/upj-hero.png",
+    revealVideo: "/assets/videos/Project Reveal/Ornament Reveal Wisuda UPJ 2025.mp4",
     gallery: [
       "/assets/images/graduation-upj-2025/upj-process-1.png",
       "/assets/images/graduation-upj-2025/upj-process-2.png",
@@ -28,6 +29,7 @@ export const projects = [
     year: "2024",
     description: "A comprehensive conceptual brand identity redesign. This project reimagines Telkom Indonesia's national telecommunications visual identity through a modern, tech-forward, and agile design system.",
     image: "/assets/images/project-redesign-telkom-indonesia/hero-redesign-telkom-indonesia.png",
+    revealVideo: "/assets/videos/Project Reveal/Logo Reveal Syne Telkom Indonesia.mp4",
     gallery: [
       "/assets/images/project-redesign-telkom-indonesia/redesign-telkom-indonesia-design-process-1.png",
       "/assets/images/project-redesign-telkom-indonesia/redesign-telkom-indonesia-design-process-2.png",
@@ -54,6 +56,7 @@ export const projects = [
     year: "2024",
     description: "Women Moment (Selasar Cerita) is an inspiring digital community. This project involved producing high-retention short-form video reels, aesthetic carousel feeds, and live streaming productions.",
     image: "/assets/images/project-womenmoment/hero-womenmoment.png",
+    revealVideo: "/assets/videos/Project Reveal/Women moment Project Reveal.mp4",
     gallery: [
       "/assets/images/project-womenmoment/womenmoment-design-process-1.png",
       "/assets/images/project-womenmoment/womenmoment-design-process-2.png",
@@ -79,6 +82,7 @@ export const projects = [
     year: "2023",
     description: "An independent thesis project focused on designing a digital advertising campaign for 'TypeCaster' – an innovative indie typing-spellcaster PC game, driven by meme marketing and short-form video hooks.",
     image: "/assets/images/project-typecaster-campaign/hero-typecaster-campaign.png",
+    revealVideo: "/assets/videos/Project Reveal/TypeCaster Project Reveal.mp4",
     gallery: [
       "/assets/images/project-typecaster-campaign/typecaster-campaign-design-process-1.png",
       "/assets/images/project-typecaster-campaign/typecaster-campaign-design-process-2.png",

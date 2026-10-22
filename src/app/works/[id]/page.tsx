@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import ProjectReels from "@/components/ui/ProjectReels";
+import ProjectRevealVideo from "@/components/ui/ProjectRevealVideo";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ id: p.id }));
@@ -84,8 +85,13 @@ export default async function WorkDetail({ params }: { params: Promise<{ id: str
         ================= RIGHT COLUMN =================
         Berisi Galeri Gambar & Video
       */}
-      <div className="w-full md:w-1/2 flex flex-col bg-[#0a0a0a]">
+      <div className="w-full md:w-1/2 flex flex-col bg-[#0a0a0a] pt-4 md:pt-20">
         
+        {/* PROJECT REVEAL VIDEO: Ditampilkan di sisi kanan paling atas */}
+        {project.revealVideo && (
+          <ProjectRevealVideo src={project.revealVideo} title={project.title} />
+        )}
+
         {/* KHUSUS DEKALCER: Tampilkan Video (Square Mode) DI ATAS galeri gambar */}
         {project.id === "dekalcer-upj" && project.reels && project.reels.length > 0 && (
           <ProjectReels reels={project.reels} variant="square" />
