@@ -135,20 +135,26 @@ const GALLERY_CATEGORIES: Category[] = [
     title: "UI / UX",
     direction: 1,
     previewImages: [
-      "/assets/images/gallery/ui-ux/hero-phone.png",
-      "/assets/images/gallery/ui-ux/rynest-hero.png",
-      "/assets/images/gallery/ui-ux/ui-design-process-1.png",
-      "/assets/images/gallery/ui-ux/ui-design-process-2.png",
-      "/assets/images/gallery/ui-ux/ui-feed-1.png",
-      "/assets/images/gallery/ui-ux/ui-feed-2.png"
+      "/assets/images/gallery/ui-ux/kemensos-redesign-app-1.webp",
+      "/assets/images/gallery/ui-ux/kemensos-redesign-app-2.webp",
+      "/assets/images/gallery/ui-ux/onstudio-app-prototype-1.webp",
+      "/assets/images/gallery/ui-ux/onstudio-app-prototype-2.webp",
+      "/assets/images/gallery/ui-ux/onstudio-site-1.webp",
+      "/assets/images/gallery/ui-ux/onstudio-site-2.webp"
     ],
     items: [
-      { title: "Mobile Application Interface Concept", url: "/assets/images/gallery/ui-ux/hero-phone.png" },
-      { title: "Rynest Tech SaaS Landing Hero", url: "/assets/images/gallery/ui-ux/rynest-hero.png" },
-      { title: "Wireframing & UX Architecture Phase 01", url: "/assets/images/gallery/ui-ux/ui-design-process-1.png" },
-      { title: "Design System & Component Specs Phase 02", url: "/assets/images/gallery/ui-ux/ui-design-process-2.png" },
-      { title: "Social Feeds Interface Layout 01", url: "/assets/images/gallery/ui-ux/ui-feed-1.png" },
-      { title: "Social Feeds Interface Layout 02", url: "/assets/images/gallery/ui-ux/ui-feed-2.png" }
+      { title: "Kemensos Redesign App 01", url: "/assets/images/gallery/ui-ux/kemensos-redesign-app-1.webp" },
+      { title: "Kemensos Redesign App 02", url: "/assets/images/gallery/ui-ux/kemensos-redesign-app-2.webp" },
+      { title: "Kemensos Redesign App 03", url: "/assets/images/gallery/ui-ux/kemensos-redesign-app-3.webp" },
+      { title: "Kemensos Redesign App 04", url: "/assets/images/gallery/ui-ux/kemensos-redesign-app-4.webp" },
+      { title: "Onstudio App Prototype 01", url: "/assets/images/gallery/ui-ux/onstudio-app-prototype-1.webp" },
+      { title: "Onstudio App Prototype 02", url: "/assets/images/gallery/ui-ux/onstudio-app-prototype-2.webp" },
+      { title: "Onstudio App Prototype 03", url: "/assets/images/gallery/ui-ux/onstudio-app-prototype-3.webp" },
+      { title: "Onstudio App Prototype 04", url: "/assets/images/gallery/ui-ux/onstudio-app-prototype-4.webp" },
+      { title: "Onstudio Site 01", url: "/assets/images/gallery/ui-ux/onstudio-site-1.webp" },
+      { title: "Onstudio Site 02", url: "/assets/images/gallery/ui-ux/onstudio-site-2.webp" },
+      { title: "Onstudio Site 03", url: "/assets/images/gallery/ui-ux/onstudio-site-3.webp" },
+      { title: "Onstudio Site 04", url: "/assets/images/gallery/ui-ux/onstudio-site-4.webp" }
     ]
   },
   {
