@@ -148,9 +148,9 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-16 flex flex-wrap gap-4">
-              <Link href="/contact" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest rounded-full hover:bg-[#FF3366] hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,51,102,0.4)] hover:scale-105">
+              <a href="mailto:mzulyanfakih90@gmail.com" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest rounded-full hover:bg-[#FF3366] hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,51,102,0.4)] hover:scale-105">
                 <Mail size={18} /> Get in Touch
-              </Link>
+              </a>
               <Link href="/works" className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/20 text-white font-bold uppercase tracking-widest rounded-full hover:bg-white/10 transition-all hover:scale-105">
                 View Portfolio <ArrowUpRight size={18} />
               </Link>

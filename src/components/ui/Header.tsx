@@ -23,7 +23,7 @@ export default function Header() {
     { name: "Home", path: "/" },
     { name: "Works", path: "/works" },
     { name: "About", path: "/about" },
-    { name: "Contact", path: "mailto:zulyanify@gmail.com" }
+    { name: "Contact", path: "mailto:mzulyanfakih90@gmail.com" }
   ];
 
   return (
@@ -77,11 +77,12 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="absolute bottom-10 left-[10vw] flex gap-8 text-white/50 text-[10px] md:text-xs font-bold tracking-widest uppercase"
+              className="absolute bottom-10 left-[10vw] flex flex-wrap gap-8 text-white/50 text-[10px] md:text-xs font-bold tracking-widest uppercase"
             >
-              <a href="#" className="hover:text-white transition-colors">Instagram</a>
-              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-              <a href="#" className="hover:text-white transition-colors">Behance</a>
+              <a href="https://www.instagram.com/muzakiboi" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Instagram</a>
+              <a href="https://www.linkedin.com/in/muhammad-zulyan-fakih-a91287174/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+              <a href="https://www.behance.net/zulyanfakih90" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Behance</a>
+              <a href="https://discord.com/users/662643259272593428" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Discord</a>
             </motion.div>
           </motion.div>
         )}
