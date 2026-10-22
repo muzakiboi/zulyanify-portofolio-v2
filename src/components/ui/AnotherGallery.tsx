@@ -82,14 +82,15 @@ const GALLERY_CATEGORIES: Category[] = [
     title: "Illustration",
     direction: 1,
     previewImages: [
+      "/assets/images/gallery/illustration/concept-model-vtuber.webp",
       "/assets/images/gallery/illustration/bali-a3.png",
       "/assets/images/gallery/illustration/illustration-1.png",
       "/assets/images/gallery/illustration/illustration-2.png",
       "/assets/images/gallery/illustration/illustration-3.png",
-      "/assets/images/gallery/illustration/illustration-4.png",
-      "/assets/images/gallery/illustration/illustration-5.png"
+      "/assets/images/gallery/illustration/illustration-4.png"
     ],
     items: [
+      { title: "Concept Model Vtuber", url: "/assets/images/gallery/illustration/concept-model-vtuber.webp" },
       { title: "Harmony of Bali Cultural A3", url: "/assets/images/gallery/illustration/bali-a3.png" },
       { title: "Editorial Book Illustration", url: "/assets/images/gallery/illustration/cover-book-1.png" },
       { title: "Character Visual Exploration 01", url: "/assets/images/gallery/illustration/illustration-1.png" },
@@ -105,8 +106,7 @@ const GALLERY_CATEGORIES: Category[] = [
       { title: "Expressive Portrait Study 11", url: "/assets/images/gallery/illustration/illustration-11.png" },
       { title: "Stylized Vector Artwork 12", url: "/assets/images/gallery/illustration/illustration-12.png" },
       { title: "Mask Group Visual Concept", url: "/assets/images/gallery/illustration/Mask group.png" },
-      { title: "Mask Group Secondary Concept", url: "/assets/images/gallery/illustration/Mask group-1.png" },
-      { title: "Geometric Framed Composition", url: "/assets/images/gallery/illustration/Frame 1171275602.png" }
+      { title: "Mask Group Secondary Concept", url: "/assets/images/gallery/illustration/Mask group-1.png" }
     ]
   },
   {
