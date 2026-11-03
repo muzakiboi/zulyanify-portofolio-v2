@@ -79,9 +79,27 @@ const GALLERY_CATEGORIES: Category[] = [
     ]
   },
   {
+    id: "presentation-deck",
+    title: "Presentation & Deck",
+    direction: 1,
+    previewImages: [
+      "/assets/images/gallery/presentation-deck/pitch-deck-onstudio-p2mw-2025/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/telkom-indonesia-redesign-gsm/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/deck-proposal-agris/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/typecaster-campaign-deck/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/visual-deck-wisuda-2025/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/deck-company-profile-dkv-upj/slide-01.webp"
+    ],
+    items: PRESENTATION_DECKS.map((d) => ({
+      title: d.title,
+      url: d.coverUrl,
+      type: "image"
+    }))
+  },
+  {
     id: "illustration",
     title: "Illustration",
-    direction: 1,
+    direction: -1,
     previewImages: [
       "/assets/images/gallery/illustration/concept-model-vtuber.webp",
       "/assets/images/gallery/illustration/bali-a3.png",
@@ -113,7 +131,7 @@ const GALLERY_CATEGORIES: Category[] = [
   {
     id: "logo-design",
     title: "Logo Design",
-    direction: -1,
+    direction: 1,
     previewImages: [
       "/assets/images/gallery/logo-design/hut-tangsel-15-concept-logo.png",
       "/assets/images/gallery/logo-design/kementerian-kebudayaan-concept-logo.png",
@@ -134,7 +152,7 @@ const GALLERY_CATEGORIES: Category[] = [
   {
     id: "ui-ux",
     title: "UI / UX",
-    direction: 1,
+    direction: -1,
     previewImages: [
       "/assets/images/gallery/ui-ux/kemensos-redesign-app-1.webp",
       "/assets/images/gallery/ui-ux/kemensos-redesign-app-2.webp",
@@ -161,7 +179,7 @@ const GALLERY_CATEGORIES: Category[] = [
   {
     id: "video-editing",
     title: "Video Editing",
-    direction: -1,
+    direction: 1,
     previewImages: [
       "/assets/images/project-womenmoment/hero-womenmoment.png",
       "/assets/images/project-rynest/rynest-hero.png",
@@ -177,24 +195,6 @@ const GALLERY_CATEGORIES: Category[] = [
       { title: "Asteka Insurance Promotional Reel", url: "/assets/videos/project-asteka/asteka-reels-1.mp4", type: "video" },
       { title: "Typecaster Social Media Campaign Reel", url: "/assets/videos/project-typecaster-campaign/typecaster-campaign-reels-1.mp4", type: "video" }
     ]
-  },
-  {
-    id: "presentation-deck",
-    title: "Presentation & Deck",
-    direction: 1,
-    previewImages: [
-      "/assets/images/gallery/presentation-deck/pitch-deck-onstudio-p2mw-2025/slide-01.webp",
-      "/assets/images/gallery/presentation-deck/telkom-indonesia-redesign-gsm/slide-01.webp",
-      "/assets/images/gallery/presentation-deck/deck-proposal-agris/slide-01.webp",
-      "/assets/images/gallery/presentation-deck/typecaster-campaign-deck/slide-01.webp",
-      "/assets/images/gallery/presentation-deck/visual-deck-wisuda-2025/slide-01.webp",
-      "/assets/images/gallery/presentation-deck/deck-company-profile-dkv-upj/slide-01.webp"
-    ],
-    items: PRESENTATION_DECKS.map((d) => ({
-      title: d.title,
-      url: d.coverUrl,
-      type: "image"
-    }))
   }
 ];
 
