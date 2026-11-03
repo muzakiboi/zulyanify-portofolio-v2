@@ -3,6 +3,7 @@ import WorksGallery from "@/components/ui/WorksGallery";
 import PhysicsSkills from "@/components/3d/PhysicsSkills";
 import SkillSet from "@/components/ui/SkillSet";
 import AboutSection from "@/components/ui/AboutSection";
+import ClientLogos from "@/components/ui/ClientLogos";
 import ServicesSection from "@/components/ui/ServicesSection";
 import Footer from "@/components/ui/Footer";
 
@@ -29,6 +30,11 @@ export default function Home() {
         ============= ABOUT / BIO SECTION ============= 
       */}
       <AboutSection />
+
+      {/* 
+        ============= CLIENT LOGOS SECTION ============= 
+      */}
+      <ClientLogos />
 
       {/* 
         ============= 3D CARDS GALLERY SECTION ============= 
