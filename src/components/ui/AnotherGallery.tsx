@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Maximize2, ChevronLeft, ChevronRight, Sparkles, Volume2, VolumeX, Play } from "lucide-react";
+import { X, Maximize2, ChevronLeft, ChevronRight, Sparkles, Volume2, VolumeX, Play, FileText, ExternalLink, ArrowUp } from "lucide-react";
+import { PRESENTATION_DECKS, type PresentationDeck } from "@/data/presentationDecks";
 
 interface GalleryItem {
   title: string;
@@ -176,14 +177,34 @@ const GALLERY_CATEGORIES: Category[] = [
       { title: "Asteka Insurance Promotional Reel", url: "/assets/videos/project-asteka/asteka-reels-1.mp4", type: "video" },
       { title: "Typecaster Social Media Campaign Reel", url: "/assets/videos/project-typecaster-campaign/typecaster-campaign-reels-1.mp4", type: "video" }
     ]
+  },
+  {
+    id: "presentation-deck",
+    title: "Presentation & Deck",
+    direction: 1,
+    previewImages: [
+      "/assets/images/gallery/presentation-deck/pitch-deck-onstudio-p2mw-2025/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/telkom-indonesia-redesign-gsm/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/deck-proposal-agris/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/typecaster-campaign-deck/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/visual-deck-wisuda-2025/slide-01.webp",
+      "/assets/images/gallery/presentation-deck/deck-company-profile-dkv-upj/slide-01.webp"
+    ],
+    items: PRESENTATION_DECKS.map((d) => ({
+      title: d.title,
+      url: d.coverUrl,
+      type: "image"
+    }))
   }
 ];
 
 export default function AnotherGallery() {
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const [selectedDeck, setSelectedDeck] = useState<PresentationDeck | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -208,7 +229,7 @@ export default function AnotherGallery() {
 
   // Prevent background scroll when modal is open
   useEffect(() => {
-    if (activeCategory || lightboxIndex !== null) {
+    if (activeCategory || lightboxIndex !== null || selectedDeck !== null) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -216,13 +237,15 @@ export default function AnotherGallery() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [activeCategory, lightboxIndex]);
+  }, [activeCategory, lightboxIndex, selectedDeck]);
 
-  // Handle ESC key to close modal
+  // Handle ESC key to close modal or return from deck view
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (lightboxIndex !== null) {
+        if (selectedDeck !== null) {
+          setSelectedDeck(null);
+        } else if (lightboxIndex !== null) {
           setLightboxIndex(null);
         } else if (activeCategory) {
           setActiveCategory(null);
@@ -231,16 +254,18 @@ export default function AnotherGallery() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeCategory, lightboxIndex]);
+  }, [activeCategory, lightboxIndex, selectedDeck]);
 
   const openCategory = (category: Category) => {
     setActiveCategory(category);
     setLightboxIndex(null);
+    setSelectedDeck(null);
   };
 
   const closeCategory = () => {
     setActiveCategory(null);
     setLightboxIndex(null);
+    setSelectedDeck(null);
     if (window.location.hash) {
       window.history.pushState(null, "", window.location.pathname);
     }
@@ -294,20 +319,23 @@ export default function AnotherGallery() {
                   animate={{ x: cat.direction === 1 ? [-1600, 0] : [0, -1600] }}
                   transition={{ repeat: Infinity, duration: isMobile ? 30 : 45, ease: "linear" }}
                 >
-                  {marquee.map((img, i) => (
-                    <div 
-                      key={i} 
-                      className="w-[200px] h-[280px] md:w-[350px] md:h-[450px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:scale-105"
-                    >
-                      <img 
-                        src={img} 
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover opacity-50 group-hover:opacity-90 transition-opacity duration-700" 
-                        alt={cat.title} 
-                      />
-                    </div>
-                  ))}
+                  {marquee.map((img, i) => {
+                    const isDeckCat = cat.id === "presentation-deck";
+                    return (
+                      <div 
+                        key={i} 
+                        className={`${isDeckCat ? 'w-[280px] h-[175px] md:w-[480px] md:h-[290px]' : 'w-[200px] h-[280px] md:w-[350px] md:h-[450px]'} rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:scale-105 bg-[#111]`}
+                      >
+                        <img 
+                          src={img} 
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover opacity-50 group-hover:opacity-90 transition-opacity duration-700" 
+                          alt={cat.title} 
+                        />
+                      </div>
+                    );
+                  })}
                 </motion.div>
               </div>
             )}
@@ -319,7 +347,7 @@ export default function AnotherGallery() {
                     {cat.title}
                   </h2>
                   <div className="flex items-center gap-2 text-xs md:text-sm font-bold tracking-widest uppercase text-[#FF3366] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Sparkles size={14} /> Explore {cat.items.length} Works ↗
+                    <Sparkles size={14} /> Explore {cat.items.length} {cat.id === "presentation-deck" ? "Decks" : "Works"} ↗
                   </div>
                </div>
             </div>
@@ -346,41 +374,59 @@ export default function AnotherGallery() {
             <div className="shrink-0 w-full px-6 md:px-12 py-5 border-b border-white/10 flex items-center justify-between bg-[#080808] z-10 shadow-2xl">
               <div className="flex items-center gap-4">
                 <button 
-                  onClick={closeCategory}
+                  onClick={selectedDeck ? () => setSelectedDeck(null) : closeCategory}
                   className="px-4 py-2 rounded-full bg-white/10 hover:bg-[#FF3366] text-white flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-all hover:scale-105"
                   aria-label="Back"
                 >
-                  <ChevronLeft size={16} /> Back
+                  <ChevronLeft size={16} /> {selectedDeck ? "Back to Decks" : "Back"}
                 </button>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter text-white leading-none">
-                    {activeCategory.title}
+                  <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter text-white leading-none line-clamp-1">
+                    {selectedDeck ? selectedDeck.title : activeCategory.title}
                   </h3>
                   <p className="text-[10px] md:text-xs tracking-widest uppercase text-[#FF3366] font-bold mt-1">
-                    {activeCategory.items.length} Archive Media Items
+                    {selectedDeck 
+                      ? `${selectedDeck.totalPages} Slides • ${selectedDeck.category}` 
+                      : `${activeCategory.items.length} ${activeCategory.id === "presentation-deck" ? "Presentation Decks" : "Archive Media Items"}`}
                   </p>
                 </div>
               </div>
 
-              {/* Category Quick Filter Pills */}
-              <div className="hidden lg:flex items-center gap-2 bg-white/5 p-1 rounded-full border border-white/10">
-                {GALLERY_CATEGORIES.map((c) => {
-                  const isCurrent = c.id === activeCategory.id;
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => setActiveCategory(c)}
-                      className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-                        isCurrent 
-                          ? "bg-[#FF3366] text-white shadow-lg shadow-[#FF3366]/30" 
-                          : "text-white/60 hover:text-white hover:bg-white/10"
-                      }`}
-                    >
-                      {c.title}
-                    </button>
-                  );
-                })}
-              </div>
+              {/* Category Quick Filter Pills (hidden if viewing a deck's full storyboard) */}
+              {!selectedDeck ? (
+                <div className="hidden lg:flex items-center gap-2 bg-white/5 p-1 rounded-full border border-white/10">
+                  {GALLERY_CATEGORIES.map((c) => {
+                    const isCurrent = c.id === activeCategory.id;
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => {
+                          setActiveCategory(c);
+                          setSelectedDeck(null);
+                        }}
+                        className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
+                          isCurrent 
+                            ? "bg-[#FF3366] text-white shadow-lg shadow-[#FF3366]/30" 
+                            : "text-white/60 hover:text-white hover:bg-white/10"
+                        }`}
+                      >
+                        {c.title}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="hidden md:flex items-center gap-3">
+                  <a 
+                    href={selectedDeck.pdfUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2 rounded-full bg-white/10 hover:bg-white text-white hover:text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 border border-white/15"
+                  >
+                    <ExternalLink size={14} /> Open Original PDF
+                  </a>
+                </div>
+              )}
 
               {/* Close Button */}
               <button 
@@ -392,85 +438,244 @@ export default function AnotherGallery() {
               </button>
             </div>
 
-            {/* Mobile Category Switcher Bar */}
-            <div className="lg:hidden flex gap-2 px-6 py-3 border-b border-white/10 overflow-x-auto shrink-0 scrollbar-none bg-black/20">
-              {GALLERY_CATEGORIES.map((c) => {
-                const isCurrent = c.id === activeCategory.id;
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => setActiveCategory(c)}
-                    className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
-                      isCurrent 
-                        ? "bg-[#FF3366] text-white" 
-                        : "bg-white/5 text-white/60 hover:text-white"
-                    }`}
-                  >
-                    {c.title}
-                  </button>
-                );
-              })}
-            </div>
+            {/* Mobile Category Switcher Bar (only when not viewing a single deck) */}
+            {!selectedDeck && (
+              <div className="lg:hidden flex gap-2 px-6 py-3 border-b border-white/10 overflow-x-auto shrink-0 scrollbar-none bg-black/20">
+                {GALLERY_CATEGORIES.map((c) => {
+                  const isCurrent = c.id === activeCategory.id;
+                  return (
+                    <button
+                      key={c.id}
+                      onClick={() => {
+                        setActiveCategory(c);
+                        setSelectedDeck(null);
+                      }}
+                      className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
+                        isCurrent 
+                          ? "bg-[#FF3366] text-white" 
+                          : "bg-white/5 text-white/60 hover:text-white"
+                      }`}
+                    >
+                      {c.title}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Gallery Media Grid (Scrollable Container) */}
-            <div className="flex-1 overflow-y-auto overscroll-contain px-6 md:px-12 py-10">
+            <div ref={scrollContainerRef} className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 md:px-12 py-10">
               <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {activeCategory.items.map((item, i) => {
-                    const isVideo = item.type === "video" || item.url.endsWith(".mp4");
+                {activeCategory.id === "presentation-deck" ? (
+                  selectedDeck ? (
+                    /* ================= MODEL B: VERTICAL STORYBOARD SCROLL ================= */
+                    <div className="max-w-5xl mx-auto space-y-6 md:space-y-10 py-2 md:py-6">
+                      {/* Mobile Open PDF Action Bar */}
+                      <div className="md:hidden flex items-center justify-between pb-4 border-b border-white/10">
+                        <button
+                          onClick={() => setSelectedDeck(null)}
+                          className="text-xs font-bold text-white/70 hover:text-white flex items-center gap-1.5 uppercase tracking-wider"
+                        >
+                          <ChevronLeft size={16} /> Back to Decks
+                        </button>
+                        <a 
+                          href={selectedDeck.pdfUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3.5 py-1.5 rounded-full bg-white/10 text-white text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 border border-white/15"
+                        >
+                          <ExternalLink size={12} /> View PDF
+                        </a>
+                      </div>
 
-                    return (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: i * 0.03 }}
-                        onClick={() => setLightboxIndex(i)}
-                        className="group relative rounded-2xl overflow-hidden bg-[#111] border border-white/10 hover:border-[#FF3366] transition-all duration-500 shadow-xl cursor-pointer aspect-[3/4] flex flex-col justify-end"
-                      >
-                        {isVideo ? (
-                          <div className="absolute inset-0 w-full h-full bg-black">
-                            <video
-                              src={item.url}
-                              muted
-                              loop
-                              playsInline
-                              preload="metadata"
-                              className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity"
+                      {/* Continuous Stack of Slides */}
+                      {selectedDeck.slides.map((slide) => (
+                        <div 
+                          key={slide.page} 
+                          className="relative group rounded-xl md:rounded-2xl overflow-hidden bg-[#111] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:border-white/25 transition-all"
+                        >
+                          <img 
+                            src={slide.url} 
+                            alt={`${selectedDeck.title} - Slide ${slide.page}`}
+                            loading="lazy" 
+                            decoding="async" 
+                            className="w-full h-auto object-contain block" 
+                          />
+                          <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] md:text-xs font-black text-white/90 border border-white/20 select-none tracking-widest shadow-lg">
+                            {String(slide.page).padStart(2, "0")} / {String(selectedDeck.totalPages).padStart(2, "0")}
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* End of Deck Footer Bar */}
+                      <div className="pt-12 pb-16 text-center border-t border-white/10 flex flex-col items-center gap-5">
+                        <div className="text-xs uppercase tracking-widest font-bold text-white/40">
+                          End of Presentation ({selectedDeck.totalPages} Slides Total)
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-3">
+                          <button 
+                            onClick={() => {
+                              if (scrollContainerRef.current) {
+                                scrollContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                              }
+                            }}
+                            className="px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 hover:scale-105"
+                          >
+                            <ArrowUp size={14} /> Back to Top
+                          </button>
+                          <a 
+                            href={selectedDeck.pdfUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-6 py-3 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/15 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 hover:scale-105"
+                          >
+                            <ExternalLink size={14} /> Download PDF
+                          </a>
+                          <button 
+                            onClick={() => {
+                              setSelectedDeck(null);
+                              if (scrollContainerRef.current) {
+                                scrollContainerRef.current.scrollTo({ top: 0 });
+                              }
+                            }}
+                            className="px-6 py-3 rounded-full bg-[#FF3366] hover:bg-[#FF3366]/80 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-[#FF3366]/30 hover:scale-105"
+                          >
+                            ← Back to All Decks
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    /* ================= PRESENTATION DECKS GRID (WIDE LANDSCAPE CARDS) ================= */
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {PRESENTATION_DECKS.map((deck, idx) => (
+                        <motion.div
+                          key={deck.id}
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: idx * 0.05 }}
+                          onClick={() => {
+                            setSelectedDeck(deck);
+                            if (scrollContainerRef.current) {
+                              scrollContainerRef.current.scrollTo({ top: 0 });
+                            }
+                          }}
+                          className="group relative rounded-2xl md:rounded-3xl overflow-hidden bg-[#111] border border-white/10 hover:border-[#FF3366] transition-all duration-500 shadow-2xl cursor-pointer flex flex-col"
+                        >
+                          {/* Cover Frame (Adaptive 16:10 Landscape / Uncropped) */}
+                          <div className="relative w-full aspect-[16/10] bg-[#080808] overflow-hidden flex items-center justify-center">
+                            {/* Ambient blurred backdrop so letterboxes never feel harsh */}
+                            <img 
+                              src={deck.coverUrl} 
+                              alt="" 
+                              aria-hidden 
+                              className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-25 scale-110" 
                             />
-                            {/* Play Icon Badge */}
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                              <div className="w-12 h-12 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center group-hover:bg-[#FF3366] group-hover:border-[#FF3366] transition-all shadow-2xl group-hover:scale-110">
-                                <Play size={20} className="ml-1" />
+                            {/* Sharp uncropped cover slide */}
+                            <img 
+                              src={deck.coverUrl} 
+                              alt={deck.title} 
+                              loading="lazy" 
+                              decoding="async" 
+                              className="relative z-10 w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]" 
+                            />
+
+                            {/* Top Badges */}
+                            <div className="absolute top-4 left-4 z-20 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] font-black tracking-widest text-[#FF3366] uppercase border border-white/15">
+                              {deck.category}
+                            </div>
+                            <div className="absolute top-4 right-4 z-20 bg-[#FF3366] text-white px-3.5 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-lg shadow-[#FF3366]/30">
+                              {deck.totalPages} SLIDES
+                            </div>
+
+                            {/* Hover Overlay with Action Button */}
+                            <div className="absolute inset-0 z-20 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <div className="px-6 py-3 rounded-full bg-[#FF3366] text-white font-bold text-xs uppercase tracking-wider shadow-2xl transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2">
+                                View Full Storyboard ↗
                               </div>
                             </div>
-                            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold tracking-widest text-[#FF3366] uppercase border border-white/10">
-                              REEL / VIDEO
+                          </div>
+
+                          {/* Card Body Info */}
+                          <div className="p-6 md:p-8 bg-gradient-to-b from-[#141414] to-[#0a0a0a] flex-1 flex flex-col justify-between border-t border-white/5">
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-black text-white group-hover:text-[#FF3366] transition-colors leading-snug">
+                                {deck.title}
+                              </h3>
+                              <p className="text-white/50 text-xs md:text-sm mt-3 line-clamp-2 leading-relaxed">
+                                {deck.description}
+                              </p>
+                            </div>
+                            <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-bold text-white/40">
+                              <span className="uppercase tracking-widest text-[10px] text-white/60">PDF Document Presentation</span>
+                              <span className="text-[#FF3366] group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+                                Read Storyboard &rarr;
+                              </span>
                             </div>
                           </div>
-                        ) : (
-                          <img
-                            src={item.url}
-                            alt={item.title}
-                            loading="lazy"
-                            decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
-                          />
-                        )}
+                        </motion.div>
+                      ))}
+                    </div>
+                  )
+                ) : (
+                  /* ================= STANDARD 4-COLUMN MEDIA GRID ================= */
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {activeCategory.items.map((item, i) => {
+                      const isVideo = item.type === "video" || item.url.endsWith(".mp4");
 
-                        {/* Card Gradient & Caption */}
-                        <div className="relative z-10 p-5 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                          <h4 className="text-white font-bold text-sm tracking-tight group-hover:text-[#FF3366] transition-colors line-clamp-2">
-                            {item.title}
-                          </h4>
-                          <p className="text-[11px] font-bold text-white/40 uppercase tracking-widest mt-1 flex items-center gap-1 group-hover:text-white/80 transition-colors">
-                            <Maximize2 size={12} /> View Full Detail
-                          </p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: i * 0.03 }}
+                          onClick={() => setLightboxIndex(i)}
+                          className="group relative rounded-2xl overflow-hidden bg-[#111] border border-white/10 hover:border-[#FF3366] transition-all duration-500 shadow-xl cursor-pointer aspect-[3/4] flex flex-col justify-end"
+                        >
+                          {isVideo ? (
+                            <div className="absolute inset-0 w-full h-full bg-black">
+                              <video
+                                src={item.url}
+                                muted
+                                loop
+                                playsInline
+                                preload="metadata"
+                                className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity"
+                              />
+                              {/* Play Icon Badge */}
+                              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div className="w-12 h-12 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center group-hover:bg-[#FF3366] group-hover:border-[#FF3366] transition-all shadow-2xl group-hover:scale-110">
+                                  <Play size={20} className="ml-1" />
+                                </div>
+                              </div>
+                              <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold tracking-widest text-[#FF3366] uppercase border border-white/10">
+                                REEL / VIDEO
+                              </div>
+                            </div>
+                          ) : (
+                            <img
+                              src={item.url}
+                              alt={item.title}
+                              loading="lazy"
+                              decoding="async"
+                              className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
+                            />
+                          )}
+
+                          {/* Card Gradient & Caption */}
+                          <div className="relative z-10 p-5 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <h4 className="text-white font-bold text-sm tracking-tight group-hover:text-[#FF3366] transition-colors line-clamp-2">
+                              {item.title}
+                            </h4>
+                            <p className="text-[11px] font-bold text-white/40 uppercase tracking-widest mt-1 flex items-center gap-1 group-hover:text-white/80 transition-colors">
+                              <Maximize2 size={12} /> View Full Detail
+                            </p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
 
