@@ -4,27 +4,35 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Link from "next/link";
 import { projects } from "@/data/projects";
 
-// Varian animasi untuk transisi halaman
+// Varian animasi untuk transisi halaman (dioptimalkan agar snappy & cepat)
 const variants: Variants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 1500 : -1500, // Masuk dari kanan atau kiri
+    x: direction > 0 ? 800 : -800, // Jarak masuk lebih proporsional & cepat
     opacity: 0,
-    scale: 0.8,
-    rotateY: direction > 0 ? 45 : -45, // Efek 3D sedikit saat masuk
+    scale: 0.9,
+    rotateY: direction > 0 ? 25 : -25,
   }),
   center: {
     x: 0,
     opacity: 1,
     scale: 1,
     rotateY: 0,
-    transition: { type: "spring" as const, stiffness: 80, damping: 20, mass: 1 }
+    transition: { 
+      type: "spring" as const, 
+      stiffness: 260, 
+      damping: 24, 
+      mass: 0.6 
+    }
   },
   exit: (direction: number) => ({
-    x: direction > 0 ? -1500 : 1500, // Keluar ke kiri atau kanan
+    x: direction > 0 ? -800 : 800,
     opacity: 0,
-    scale: 0.8,
-    rotateY: direction > 0 ? -45 : 45,
-    transition: { type: "spring" as const, stiffness: 80, damping: 20, mass: 1 }
+    scale: 0.9,
+    rotateY: direction > 0 ? -25 : 25,
+    transition: { 
+      duration: 0.28, 
+      ease: [0.32, 0, 0.67, 0] 
+    }
   })
 };
 
@@ -56,7 +64,7 @@ export default function PaginatedWorksGallery() {
       
       {/* Container Kartu 3D */}
       <div className="relative w-full h-[40vh] md:h-[60vh] max-w-7xl mx-auto flex justify-center items-center perspective-1000 mb-10">
-        <AnimatePresence custom={direction} mode="wait">
+        <AnimatePresence custom={direction} initial={false}>
           <motion.div
             key={page}
             custom={direction}
