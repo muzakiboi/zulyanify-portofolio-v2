@@ -60,6 +60,8 @@ const GALLERY_CATEGORIES: Category[] = [
       { title: "Dekalcer Poster Variant 01", url: "/assets/images/gallery/graphic-design/dekalcer-poster-1.webp" },
       { title: "Dekalcer Poster Variant 02", url: "/assets/images/gallery/graphic-design/dekalcer-poster-2.webp" },
       { title: "Dekalcer Poster Variant 03", url: "/assets/images/gallery/graphic-design/dekalcer-poster-3.webp" },
+      { title: "Infografis Lingkup Manajemen Strategik", url: "/assets/images/gallery/graphic-design/infografis-manajemen-strategik.webp" },
+      { title: "Infografis Kebijakan Pendidikan Barak Militer", url: "/assets/images/gallery/graphic-design/infografis-kebijakan-barak-militer.webp" },
       { title: "Kopi Kenangan Commercial Concept", url: "/assets/images/gallery/graphic-design/kopi-kenangan-concept-design.webp" },
       { title: "Destruction Art — The Joker", url: "/assets/images/gallery/graphic-design/destruction-art-joker.webp" },
       { title: "Expression of Bali Cultural Poster", url: "/assets/images/gallery/graphic-design/poster-expression-of-the-beauty-of-bali.webp" },
