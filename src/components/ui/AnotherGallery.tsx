@@ -488,24 +488,48 @@ export default function AnotherGallery() {
                         </a>
                       </div>
 
-                      {/* Continuous Stack of Slides */}
-                      {selectedDeck.slides.map((slide) => (
-                        <div 
-                          key={slide.page} 
-                          className="relative group rounded-xl md:rounded-2xl overflow-hidden bg-[#111] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:border-white/25 transition-all"
-                        >
-                          <img 
-                            src={slide.url} 
-                            alt={`${selectedDeck.title} - Slide ${slide.page}`}
-                            loading="lazy" 
-                            decoding="async" 
-                            className="w-full h-auto object-contain block" 
-                          />
-                          <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] md:text-xs font-black text-white/90 border border-white/20 select-none tracking-widest shadow-lg">
-                            {String(slide.page).padStart(2, "0")} / {String(selectedDeck.totalPages).padStart(2, "0")}
-                          </div>
+                      {/* Continuous Stack or 2-Column Editorial Grid for Portrait Decks */}
+                      {selectedDeck.isPortrait ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                          {selectedDeck.slides.map((slide) => (
+                            <div 
+                              key={slide.page} 
+                              className="relative group rounded-xl md:rounded-2xl overflow-hidden bg-[#111] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:border-[#FF3366]/60 transition-all hover:scale-[1.01]"
+                            >
+                              <img 
+                                src={slide.url} 
+                                alt={`${selectedDeck.title} - Page ${slide.page}`}
+                                loading="lazy" 
+                                decoding="async" 
+                                className="w-full h-auto object-contain block" 
+                              />
+                              <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] md:text-xs font-black text-white/90 border border-white/20 select-none tracking-widest shadow-lg">
+                                {String(slide.page).padStart(2, "0")} / {String(selectedDeck.totalPages).padStart(2, "0")}
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      ) : (
+                        <div className="space-y-6 md:space-y-10">
+                          {selectedDeck.slides.map((slide) => (
+                            <div 
+                              key={slide.page} 
+                              className="relative group rounded-xl md:rounded-2xl overflow-hidden bg-[#111] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:border-white/25 transition-all"
+                            >
+                              <img 
+                                src={slide.url} 
+                                alt={`${selectedDeck.title} - Slide ${slide.page}`}
+                                loading="lazy" 
+                                decoding="async" 
+                                className="w-full h-auto object-contain block" 
+                              />
+                              <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] md:text-xs font-black text-white/90 border border-white/20 select-none tracking-widest shadow-lg">
+                                {String(slide.page).padStart(2, "0")} / {String(selectedDeck.totalPages).padStart(2, "0")}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
 
                       {/* End of Deck Footer Bar */}
                       <div className="pt-12 pb-16 text-center border-t border-white/10 flex flex-col items-center gap-5">
